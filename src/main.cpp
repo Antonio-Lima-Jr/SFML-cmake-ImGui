@@ -1,6 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
-#include <string>
 #include <imgui-SFML.h>
 #include <imgui.h>
 #include <cmath>
