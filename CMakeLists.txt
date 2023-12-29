@@ -27,6 +27,8 @@ add_executable(CMakeSFMLProject src/main.cpp
         src/game/World.h
         src/game/GridSingleton.cpp
         src/game/GridSingleton.h
+        src/game/GridSingleton_v2.cpp
+        src/game/GridSingleton_v2.h
 )
 target_link_libraries(CMakeSFMLProject PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML)
 target_compile_features(CMakeSFMLProject PRIVATE cxx_std_17)

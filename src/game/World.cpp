@@ -18,7 +18,7 @@ namespace game {
     World::World() : mWindow(sf::VideoMode(1800u, 800u),
                              "CMake SFML Project"),
                      deltaClock(),
-                     m_grid(GridSingleton::getInstance()){
+                     m_grid( GridSingleton_v2::getInstance(100, 100)){
 //        initGrid();
         std::cout << "World created" << std::endl;
     }
@@ -44,7 +44,6 @@ namespace game {
 
         circle->setFillColor(sf::Color::Red);
         circle->setPosition(400, 100);
-        auto my_grid = m_grid->getGrid();
         while (mWindow.isOpen()) {
             start = std::chrono::high_resolution_clock::now();
             ImGui::SFML::Update(mWindow, deltaClock.restart());
@@ -100,13 +99,15 @@ namespace game {
 
             ImGui::SFML::Render(mWindow);
 
+            
 //            draw grid
-            for (int i = 0; i < 120; i++) {
-                for (int j = 0; j < 120; j++) {
-                    my_grid[i][j].shape.setPosition(my_grid[i][j].shape.getPosition().x + f, my_grid[i][j].shape.getPosition().y);
-                    mWindow.draw(my_grid[i][j].shape);
-                }
-            }
+            for(auto i : m_grid.)
+//             for (int i = 0; i < my_grid.size(); i++) {
+//                 for (int j = 0; j < 120; j++) {
+//                     my_grid[i][j].shape.setPosition(my_grid[i][j].shape.getPosition().x + f, my_grid[i][j].shape.getPosition().y);
+//                     mWindow.draw(my_grid[i][j].shape);
+//                 }
+//             }
 
 //            for (int i = 0; i < 50; i++) {
 //                for (int j = 0; j < 50; ++j) {

@@ -7,6 +7,7 @@
 
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "GridSingleton.h"
+#include "GridSingleton_v2.h"
 
 namespace game {
 
@@ -20,7 +21,7 @@ namespace game {
     private:
         sf::RenderWindow mWindow;
         sf::Clock deltaClock;
-        game::GridSingleton *m_grid;
+        game::GridSingleton_v2 m_grid;
         static void initGrid() ;
     };
 
