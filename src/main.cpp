@@ -5,11 +5,7 @@
 
 
 int main() {
-
     game::World world = game::World();
     world.render();
-
-
-
     return 0;
 }

@@ -6,8 +6,8 @@
 #define CMAKESFMLPROJECT_WORLD_H
 
 #include "SFML/Graphics/RenderWindow.hpp"
-#include "GridSingleton.h"
-#include "GridSingleton_v2.h"
+#include "ui/ManagerUI.h"
+#include "utils/EventManager.h"
 
 namespace game {
 
@@ -15,14 +15,14 @@ namespace game {
     public:
         World();
         ~World();
-
-        void update();
         void render();
+        void setup();
     private:
         sf::RenderWindow mWindow;
         sf::Clock deltaClock;
-        game::GridSingleton_v2 m_grid;
-        static void initGrid() ;
+        game::ManagerUI m_managerUI;
+        game::EventManager m_eventManager;
+        sf::Vector2<unsigned int > _centerScreen;
     };
 
 } // game

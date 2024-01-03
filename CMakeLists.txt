@@ -25,10 +25,12 @@ FetchContent_MakeAvailable(ImGui-SFML)
 add_executable(CMakeSFMLProject src/main.cpp
         src/game/World.cpp
         src/game/World.h
-        src/game/GridSingleton.cpp
-        src/game/GridSingleton.h
-        src/game/GridSingleton_v2.cpp
-        src/game/GridSingleton_v2.h
+        src/game/Player/SpaceShip.cpp
+        src/game/Player/SpaceShip.h
+        src/game/ui/ManagerUI.cpp
+        src/game/ui/ManagerUI.h
+        src/game/utils/EventManager.cpp
+        src/game/utils/EventManager.h
 )
 target_link_libraries(CMakeSFMLProject PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML)
 target_compile_features(CMakeSFMLProject PRIVATE cxx_std_17)
