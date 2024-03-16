@@ -5,13 +5,12 @@
 
 int main()
 {
-    auto window = sf::RenderWindow{{1800u, 800u}, "CMake SFML Project"};
+    auto window = sf::RenderWindow{{1800u, 800u}, "My Juego"};
     window.setFramerateLimit(144);
     if (!ImGui::SFML::Init(window, true))
     {
         return 0;
     }
-    
 
     sf::Clock deltaClock;
 
@@ -54,9 +53,7 @@ int main()
         }
 
         // Edit a color stored as 4 floats
-        ImGui::ColorEdit4("Color", (float*)&my_color);
-
-
+        ImGui::ColorEdit4("Color", (float *)&my_color);
 
         // Generate samples and plot themS
         float samples[100];
@@ -67,7 +64,7 @@ int main()
         // Display contents in a scrolling region
         ImGui::TextColored(ImVec4(1, 1, 0, 1), "Debug");
         ImGui::BeginChild("Scrolling");
-     
+
         ImGui::Text("Elapsed time : %f", deltaClock.getElapsedTime().asSeconds());
         ImGui::EndChild();
         ImGui::End();
