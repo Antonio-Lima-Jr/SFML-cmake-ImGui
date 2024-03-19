@@ -22,7 +22,11 @@ FetchContent_Declare(ImGui-SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(ImGui-SFML)
 
-add_executable(CMakeSFMLProject src/main.cpp)
+add_executable(CMakeSFMLProject src/main.cpp 
+
+src/Menu/MenuImGui.cpp
+src/Menu/MenuImGui.h
+)
 target_link_libraries(CMakeSFMLProject PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML)
 target_compile_features(CMakeSFMLProject PRIVATE cxx_std_17)
 

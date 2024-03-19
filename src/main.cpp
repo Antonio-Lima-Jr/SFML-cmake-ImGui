@@ -2,28 +2,58 @@
 #include <imgui-SFML.h>
 #include <imgui.h>
 #include <cmath>
+#include "Menu/MenuImGui.h"
 
 int main()
 {
-    auto window = sf::RenderWindow{{1800u, 800u}, "My Juego"};
+    unsigned int winX = 1500;
+    unsigned int winY = 900;
+    float cX = winX / 2;
+    float cY = winY / 2;
+    float R = M_PI * 100;
+    float r = M_PI * 30;
+    float dT = M_PI / 100.;
+    float theta = 0.;
+    float Theta = 0.;
+
+    int 	width, tempx, tempy, counter, red, green, blue;
+
+    width = 2;
+
+    float d = 50;
+    float X, Y, x, y ; 
+
+    std::string sign = "m";
+
+    auto window = sf::RenderWindow{{winX, winY}, "My Juego"};
     window.setFramerateLimit(144);
-    if (!ImGui::SFML::Init(window, true))
-    {
-        return 0;
-    }
+    MenuImGui menuImGui = MenuImGui(window);
 
     sf::Clock deltaClock;
+
+    sf::Texture texture;
+    texture.create(winX, winY);
+
+    sf::Uint8 *pixels = new sf::Uint8[winX * winY * 4];
+    for (int i = 0; i < winX * winY * 4; i += 4)
+    {
+        pixels[i] = 210;
+        pixels[i + 1] = 200;
+        pixels[i + 2] = 150;
+        pixels[i + 3] = 255;
+    }
+    sf::Sprite sprite(texture);
 
     bool my_tool_active = true;
     float my_color[4];
 
     while (window.isOpen())
     {
-        ImGui::SFML::Update(window, deltaClock.restart());
+        menuImGui.update();
 
         for (auto event = sf::Event{}; window.pollEvent(event);)
         {
-            ImGui::SFML::ProcessEvent(window, event);
+            menuImGui.processEvent(event);
             if (event.type == sf::Event::Closed)
             {
                 window.close();
@@ -31,46 +61,41 @@ int main()
             }
         }
 
-        // ImGui::ShowDemoWindow();
-        ImGui::Begin("My First Tool", &my_tool_active, ImGuiWindowFlags_MenuBar);
-        if (ImGui::BeginMenuBar())
-        {
-            if (ImGui::BeginMenu("File"))
-            {
-                if (ImGui::MenuItem("Open..", "Ctrl+O"))
-                { /* Do stuff */
-                }
-                if (ImGui::MenuItem("Save", "Ctrl+S"))
-                { /* Do stuff */
-                }
-                if (ImGui::MenuItem("Close", "Ctrl+W"))
-                {
-                    my_tool_active = false;
-                }
-                ImGui::EndMenu();
-            }
-            ImGui::EndMenuBar();
-        }
-
-        // Edit a color stored as 4 floats
-        ImGui::ColorEdit4("Color", (float *)&my_color);
-
-        // Generate samples and plot themS
-        float samples[100];
-        for (int n = 0; n < 100; n++)
-            samples[n] = sinf(n * 0.2f + ImGui::GetTime() * 3.5f);
-        ImGui::PlotLines("Samples", samples, 100);
-
-        // Display contents in a scrolling region
-        ImGui::TextColored(ImVec4(1, 1, 0, 1), "Debug");
-        ImGui::BeginChild("Scrolling");
-
-        ImGui::Text("Elapsed time : %f", deltaClock.getElapsedTime().asSeconds());
-        ImGui::EndChild();
-        ImGui::End();
-
         window.clear();
-        ImGui::SFML::Render(window);
+
+        Theta += dT;
+
+        if (sign == "m")
+            theta -= dT * 2 * R / d;
+        if (sign == "p")
+            theta += dT * 2 * R / d;
+
+        X = cX + R * cos(Theta);
+        Y = cY + R * sin(Theta);
+
+        x = X + r * cos(theta);
+        y = Y + r * sin(theta);
+
+        tempx = int(x);
+        tempy = int(y);
+
+        counter = 0;
+
+        // Change the pixel colors at the pencil location (and nearby locations to accomodate the requested 'stroke width') to the color specified by the user.
+        while (counter < width)
+        {
+            if ((4 * tempy * winX + 4 * (tempx + counter - int(0.5 * counter))) < winX * winY * 4)
+            {
+                pixels[4 * tempy * winX + 4 * (tempx + counter - int(0.5 * counter)) + 0] = 155;
+                pixels[4 * tempy * winX + 4 * (tempx + counter - int(0.5 * counter)) + 1] = 100;
+                pixels[4 * tempy * winX + 4 * (tempx + counter - int(0.5 * counter)) + 2] = 200;
+            }
+            counter++;
+        }
+        
+        window.draw(sprite);
+        texture.update(pixels);
+        menuImGui.render();
         window.display();
     }
 }
